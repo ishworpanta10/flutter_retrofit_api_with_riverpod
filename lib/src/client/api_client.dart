@@ -1,11 +1,8 @@
 import 'package:dio/dio.dart' as dio;
 import 'package:dio/dio.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:retrofit/http.dart';
 
 import '../models/models.dart';
-import '../providers/configuration_provider.dart';
 
 part 'api_client.g.dart';
 
@@ -15,14 +12,14 @@ abstract class ApiClient {
   factory ApiClient(dio.Dio dio, {String? baseUrl}) = _ApiClient;
 
   ///Static create method
-  static Future<ApiClient> create({String? base, required Reader read}) async {
-    final dio = Dio();
-    dio.interceptors.add(PrettyDioLogger());
-    dio.options.headers['content-Type'] = 'application/json';
-    final configs = await read(configurationsProvider.future);
-    dio.options.headers["Authorization"] = "Bearer ${configs.apiKey}";
-    return ApiClient(dio, baseUrl: base);
-  }
+  // static Future<ApiClient> create({String? base, required Reader read}) async {
+  //   final dio = Dio();
+  //   dio.interceptors.add(PrettyDioLogger());
+  //   dio.options.headers['content-Type'] = 'application/json';
+  //   final configs = await read(configurationsProvider.future);
+  //   dio.options.headers["Authorization"] = "Bearer ${configs.apiKey}";
+  //   return ApiClient(dio, baseUrl: base);
+  // }
 
   /// ************************************ GET APIS ********************************** ///
   ///
