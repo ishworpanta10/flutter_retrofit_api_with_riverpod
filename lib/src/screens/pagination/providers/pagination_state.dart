@@ -39,5 +39,5 @@ class PaginationState<T> extends Equatable {
   }
 
   @override
-  List<Object> get props => [status, dataList, isFirstFetched];
+  List<Object> get props => [status, oldDataList, dataList, isFirstFetched];
 }

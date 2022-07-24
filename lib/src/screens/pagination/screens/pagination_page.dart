@@ -1,20 +1,20 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_retrofit/src/screens/pagination/models/post_model.dart';
-import 'package:flutter_retrofit/src/screens/pagination/providers/pagination_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../models/post_model.dart';
+import '../providers/pagination_notifier.dart';
 import '../providers/pagination_state.dart';
 
-class PaginationPage<T> extends ConsumerStatefulWidget {
+class PaginationPage extends ConsumerStatefulWidget {
   const PaginationPage({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<PaginationPage<T>> createState() => _PaginationPageState();
+  ConsumerState<PaginationPage> createState() => _PaginationPageState();
 }
 
-class _PaginationPageState<T> extends ConsumerState<PaginationPage<T>> {
+class _PaginationPageState extends ConsumerState<PaginationPage> {
   final ScrollController scrollController = ScrollController();
 
   @override
@@ -25,17 +25,20 @@ class _PaginationPageState<T> extends ConsumerState<PaginationPage<T>> {
   }
 
   Future<void> fetchPaginatedData() async {
-    if (mounted) await ref.read(postPaginationControllerProvider.notifier).fetchPaginatedApiData();
+    await ref.read(postPaginationControllerProvider.notifier).fetchPaginatedApiData();
   }
 
   void setupScrollController() {
     scrollController.addListener(() async {
+      ///No Progress
       if (scrollController.position.atEdge) {
         if (scrollController.position.pixels != 0) {
-          // ref.read(postPaginationControllerProvider.notifier).fetchPaginatedApiData();
           await fetchPaginatedData();
         }
       }
+      // if (scrollController.offset == scrollController.position.maxScrollExtent) {
+      //   await fetchPaginatedData();
+      // }
     });
   }
 
@@ -58,16 +61,12 @@ class _PaginationPageState<T> extends ConsumerState<PaginationPage<T>> {
           List<PostModel> dataList = [];
           bool isLoading = false;
           if (state.status == PaginationStateStatus.loading) {
-            // print("Insode If");
-            dataList = state.dataList;
+            dataList = state.oldDataList;
             isLoading = true;
           } else if (state.status == PaginationStateStatus.loaded) {
-            // print("Insode else If");
-
             dataList = state.dataList;
           }
 
-          // print(isLoading);
           if (dataList.isEmpty) {
             return const Center(
               child: Text('No Post Data'),
@@ -82,10 +81,10 @@ class _PaginationPageState<T> extends ConsumerState<PaginationPage<T>> {
                   return ListTile(
                     contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     title: Text(singlePost.title ?? ''),
-                    subtitle: Text(singlePost.body ?? ''),
+                    subtitle: Text(singlePost.id.toString()),
                   );
                 } else {
-                  Timer(const Duration(milliseconds: 40), () {
+                  Timer(const Duration(milliseconds: 30), () {
                     scrollController.jumpTo(scrollController.position.maxScrollExtent);
                   });
                   return const Center(

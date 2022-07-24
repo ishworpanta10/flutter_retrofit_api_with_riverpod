@@ -7,7 +7,12 @@ import 'pagination_state.dart';
 final postPaginationControllerProvider =
     StateNotifierProvider.autoDispose<PaginationNotifier<PostModel>, PaginationState<PostModel>>((ref) {
   final paginationRepo = ref.watch(paginationRepositoryProvider);
-  return PaginationNotifier<PostModel>(fetchItems: paginationRepo.getPaginatedPostList());
+  return PaginationNotifier<PostModel>(
+    fetchItems: ({required int page}) {
+      print('Input Page : $page');
+      return paginationRepo.getPaginatedPostList(page: page);
+    },
+  );
 });
 
 class PaginationNotifier<T> extends StateNotifier<PaginationState<T>> {
@@ -20,14 +25,14 @@ class PaginationNotifier<T> extends StateNotifier<PaginationState<T>> {
 
   int page = 1;
 
-  final Future<List<T>?> fetchItems;
+  final Future<List<T>?> Function({required int page}) fetchItems;
 
   Future<void> fetchPaginatedApiData() async {
     if (state.status == PaginationStateStatus.loading) return;
 
     ///we pass the post which has been already fetched in prev state
     final currentState = state;
-    List<T> oldDataList = <T>[];
+    var oldDataList = <T>[];
 
     if (currentState.status == PaginationStateStatus.loaded) {
       oldDataList = currentState.dataList;
@@ -35,11 +40,12 @@ class PaginationNotifier<T> extends StateNotifier<PaginationState<T>> {
     state = state.copyWith(status: PaginationStateStatus.loading, oldDataList: oldDataList, isFirstFetched: page == 1);
 
     try {
-      final List<T>? newDataList = await fetchItems;
+      final List<T>? newDataList = await fetchItems(page: page);
       if (newDataList != null) {
         page++;
 
         ///we need old as well as new data to show
+
         final List<T> combinedDataList = state.oldDataList;
         combinedDataList.addAll(newDataList);
         print("Combined List Length : ${combinedDataList.length}");
