@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_retrofit/src/models/models.dart';
 import 'package:flutter_retrofit/src/providers/api_future_providers.dart';
 import 'package:flutter_retrofit/src/providers/ui_providers.dart';
+import 'package:flutter_retrofit/src/screens/pagination/screens/pagination_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'user_detail_screen.dart';
@@ -16,6 +17,22 @@ class HomePage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('HomePage'),
+        actions: [
+          OutlinedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const PaginationPage(),
+                ),
+              );
+            },
+            child: const Text(
+              'Pagination',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
       ),
       body: Column(
         children: [
