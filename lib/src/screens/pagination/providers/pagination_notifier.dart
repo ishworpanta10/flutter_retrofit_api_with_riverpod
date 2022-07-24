@@ -1,8 +1,20 @@
+import 'package:flutter_retrofit/src/models/models.dart';
 import 'package:flutter_retrofit/src/screens/pagination/repositories/pagination_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/post_model.dart';
 import 'pagination_state.dart';
+
+final userPaginationControllerProvider =
+    StateNotifierProvider.autoDispose<PaginationNotifier<UserModel>, PaginationState<UserModel>>((ref) {
+  final paginationRepo = ref.watch(paginationRepositoryProvider);
+  return PaginationNotifier<UserModel>(
+    fetchItems: ({required int page}) {
+      print('Input Page : $page');
+      return paginationRepo.getPaginatedUserList(page: page);
+    },
+  );
+});
 
 final postPaginationControllerProvider =
     StateNotifierProvider.autoDispose<PaginationNotifier<PostModel>, PaginationState<PostModel>>((ref) {

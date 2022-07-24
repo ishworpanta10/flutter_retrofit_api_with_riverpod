@@ -7,14 +7,14 @@ import '../models/post_model.dart';
 import '../providers/pagination_notifier.dart';
 import '../providers/pagination_state.dart';
 
-class PaginationPage extends ConsumerStatefulWidget {
-  const PaginationPage({Key? key}) : super(key: key);
+class PaginationPostPage extends ConsumerStatefulWidget {
+  const PaginationPostPage({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<PaginationPage> createState() => _PaginationPageState();
+  ConsumerState<PaginationPostPage> createState() => _PaginationPageState();
 }
 
-class _PaginationPageState extends ConsumerState<PaginationPage> {
+class _PaginationPageState extends ConsumerState<PaginationPostPage> {
   final ScrollController scrollController = ScrollController();
 
   @override
@@ -46,7 +46,7 @@ class _PaginationPageState extends ConsumerState<PaginationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pagination Page'),
+        title: const Text('Pagination Post Page'),
       ),
       body: Consumer(
         builder: (BuildContext context, WidgetRef ref, Widget? child) {
@@ -72,7 +72,8 @@ class _PaginationPageState extends ConsumerState<PaginationPage> {
               child: Text('No Post Data'),
             );
           } else {
-            return ListView.builder(
+            return ListView.separated(
+              separatorBuilder: (context, index) => const Divider(),
               controller: scrollController,
               itemCount: dataList.length + (isLoading ? 1 : 0),
               itemBuilder: (context, index) {
@@ -80,7 +81,7 @@ class _PaginationPageState extends ConsumerState<PaginationPage> {
                   final singlePost = dataList[index];
                   return ListTile(
                     contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    title: Text(singlePost.title ?? ''),
+                    title: Text('${singlePost.id.toString()}. ${singlePost.title}'),
                     subtitle: Text(singlePost.id.toString()),
                   );
                 } else {

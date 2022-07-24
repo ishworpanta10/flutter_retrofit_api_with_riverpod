@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_retrofit/src/models/models.dart';
 import 'package:flutter_retrofit/src/providers/api_future_providers.dart';
 import 'package:flutter_retrofit/src/providers/ui_providers.dart';
-import 'package:flutter_retrofit/src/screens/pagination/screens/pagination_page.dart';
+import 'package:flutter_retrofit/src/screens/pagination/screens/pagination_post_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'pagination/screens/pagination_user_page.dart';
 import 'user_detail_screen.dart';
 
 class HomePage extends ConsumerWidget {
@@ -23,12 +24,26 @@ class HomePage extends ConsumerWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => const PaginationPage(),
+                  builder: (_) => const PaginationPostPage(),
                 ),
               );
             },
             child: const Text(
-              'Pagination',
+              'Post Pagination',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+          OutlinedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const PaginationUserPage(),
+                ),
+              );
+            },
+            child: const Text(
+              'User Pagination',
               style: TextStyle(color: Colors.white),
             ),
           ),

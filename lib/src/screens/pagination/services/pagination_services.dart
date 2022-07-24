@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_retrofit/src/models/models.dart';
 import 'package:flutter_retrofit/src/screens/pagination/models/post_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -22,7 +23,18 @@ class PaginationService {
       final dataList = response.data as List<dynamic>;
       return dataList.map((e) => PostModel.fromMap(e)).toList();
     } catch (err) {
-      print("Paginated Error :$err");
+      print("Paginated Error on Post :$err");
+      return null;
+    }
+  }
+
+  Future<List<UserModel>?> getPaginatedUserList({int page = 1, int limit = 10}) async {
+    try {
+      final response = await dio.get('users?_page=$page&_limit=$limit');
+      final dataList = response.data as List<dynamic>;
+      return dataList.map((e) => UserModel.fromJson(e)).toList();
+    } catch (err) {
+      print("Paginated Error on User:$err");
       return null;
     }
   }

@@ -1,3 +1,4 @@
+import 'package:flutter_retrofit/src/models/models.dart';
 import 'package:flutter_retrofit/src/screens/pagination/services/pagination_services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,5 +15,9 @@ class PaginationRepository {
 
   Future<List<PostModel>?> getPaginatedPostList({int page = 1, int limit = 10}) async {
     return paginationService.getPaginatedPostList(limit: limit, page: page);
+  }
+
+  Future<List<UserModel>?> getPaginatedUserList({int page = 1, int limit = 9}) async {
+    return paginationService.getPaginatedUserList(limit: limit, page: page);
   }
 }
