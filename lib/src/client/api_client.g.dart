@@ -130,7 +130,7 @@ class _ApiClient implements ApiClient {
     final _data = <String, dynamic>{};
     await _dio.fetch<void>(_setStreamType<void>(
         Options(method: 'DELETE', headers: _headers, extra: _extra)
-            .compose(_dio.options, 'users/{id',
+            .compose(_dio.options, 'users/${id}',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     return null;

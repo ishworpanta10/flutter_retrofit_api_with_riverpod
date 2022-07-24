@@ -11,10 +11,13 @@ dependencies:
 
   cupertino_icons: ^1.0.5
   flutter_riverpod: ^2.0.0-dev.9
+  equatable: ^2.0.3
   dio: ^4.0.6
   dartz: ^0.10.1
+
   pretty_dio_logger: ^1.1.1
 
+  json_annotation: ^4.6.0
   freezed_annotation: ^2.1.0
   retrofit: ^3.0.1+1
 

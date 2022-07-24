@@ -16,7 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$FailureModel {
-  String get message => throw _privateConstructorUsedError;
+  String? get message => throw _privateConstructorUsedError;
+  String? get statusMessage => throw _privateConstructorUsedError;
   int? get code => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -29,7 +30,7 @@ abstract class $FailureModelCopyWith<$Res> {
   factory $FailureModelCopyWith(
           FailureModel value, $Res Function(FailureModel) then) =
       _$FailureModelCopyWithImpl<$Res>;
-  $Res call({String message, int? code});
+  $Res call({String? message, String? statusMessage, int? code});
 }
 
 /// @nodoc
@@ -43,13 +44,18 @@ class _$FailureModelCopyWithImpl<$Res> implements $FailureModelCopyWith<$Res> {
   @override
   $Res call({
     Object? message = freezed,
+    Object? statusMessage = freezed,
     Object? code = freezed,
   }) {
     return _then(_value.copyWith(
       message: message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      statusMessage: statusMessage == freezed
+          ? _value.statusMessage
+          : statusMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
       code: code == freezed
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
@@ -65,7 +71,7 @@ abstract class _$$_FailureModelCopyWith<$Res>
           _$_FailureModel value, $Res Function(_$_FailureModel) then) =
       __$$_FailureModelCopyWithImpl<$Res>;
   @override
-  $Res call({String message, int? code});
+  $Res call({String? message, String? statusMessage, int? code});
 }
 
 /// @nodoc
@@ -82,13 +88,18 @@ class __$$_FailureModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? message = freezed,
+    Object? statusMessage = freezed,
     Object? code = freezed,
   }) {
     return _then(_$_FailureModel(
       message: message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      statusMessage: statusMessage == freezed
+          ? _value.statusMessage
+          : statusMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
       code: code == freezed
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
@@ -101,17 +112,23 @@ class __$$_FailureModelCopyWithImpl<$Res>
 
 @JsonSerializable(explicitToJson: true)
 class _$_FailureModel implements _FailureModel {
-  const _$_FailureModel({this.message = 'Something went wrong', this.code});
+  const _$_FailureModel(
+      {this.message = 'Something went wrong',
+      this.statusMessage = 'Error',
+      this.code});
 
   @override
   @JsonKey()
-  final String message;
+  final String? message;
+  @override
+  @JsonKey()
+  final String? statusMessage;
   @override
   final int? code;
 
   @override
   String toString() {
-    return 'FailureModel(message: $message, code: $code)';
+    return 'FailureModel(message: $message, statusMessage: $statusMessage, code: $code)';
   }
 
   @override
@@ -120,6 +137,8 @@ class _$_FailureModel implements _FailureModel {
         (other.runtimeType == runtimeType &&
             other is _$_FailureModel &&
             const DeepCollectionEquality().equals(other.message, message) &&
+            const DeepCollectionEquality()
+                .equals(other.statusMessage, statusMessage) &&
             const DeepCollectionEquality().equals(other.code, code));
   }
 
@@ -127,6 +146,7 @@ class _$_FailureModel implements _FailureModel {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(message),
+      const DeepCollectionEquality().hash(statusMessage),
       const DeepCollectionEquality().hash(code));
 
   @JsonKey(ignore: true)
@@ -136,11 +156,15 @@ class _$_FailureModel implements _FailureModel {
 }
 
 abstract class _FailureModel implements FailureModel {
-  const factory _FailureModel({final String message, final int? code}) =
-      _$_FailureModel;
+  const factory _FailureModel(
+      {final String? message,
+      final String? statusMessage,
+      final int? code}) = _$_FailureModel;
 
   @override
-  String get message;
+  String? get message;
+  @override
+  String? get statusMessage;
   @override
   int? get code;
   @override

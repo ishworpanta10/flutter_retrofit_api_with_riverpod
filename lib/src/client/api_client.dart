@@ -30,12 +30,12 @@ abstract class ApiClient {
   /// ======== Get Single User Detail ======== ////
   /// Get using @[Path]
   @GET('users/{id}') //E.g /users/234
-  Future<UserModel> getSingleUsers(@Path('id') int id);
+  Future<UserModel> getSingleUsers(@Path('id') String id);
 
   /// ======== Get All Comments of specific post ======== ////
   /// Get using @[Query]
   @GET('comments') //E.g /comments?post_id=10
-  Future<List<CommentModel>> getPostComments(@Query('post_id') int postId);
+  Future<List<CommentModel>> getPostComments(@Query('post_id') String postId);
 
   /// ======== Get All Comments of specific post query map ======== ////
   /// Get using @[Queries]
@@ -58,7 +58,7 @@ abstract class ApiClient {
 
   /// ************************************ DELETE APIS ********************************** /// Requires Authorization
   ///Delete using @[Path]
-  @DELETE('users/{id')
+  @DELETE('users/{id}')
   // @Headers(<String, dynamic>{HttpHeaders.authorizationHeader: key}) //for api key with static key
   Future<void> deleteUser(@Path('id') int id);
 }
